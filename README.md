@@ -64,9 +64,7 @@
    main.jsx           React, Redux, and Router entry point
  ```
 
- ## Assessment Note
 
- The project currently covers the assessment requirements except `useRef`; no ref is used in the existing implementation. The app uses functional components only and does not use a CSS framework.
 
 
 
