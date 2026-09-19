@@ -1,5 +1,5 @@
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
 import {
@@ -60,19 +60,11 @@ function Products() {
 
   const [category, setCategory] = useState(() => "all");
 
-  const searchInputRef = useRef(null);
-
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchProducts());
     }
   }, [status, dispatch]);
-
-  useEffect(() => {
-    if (searchInputRef.current) {
-      searchInputRef.current.focus();
-    }
-  }, []);
 
   const categoryOptions = useMemo(() => {
     const uniqueCategories = products.map((product) => product.category);
@@ -92,14 +84,6 @@ function Products() {
       return matchesSearch && matchesCategory;
     });
   }, [products, search, category]);
-
-  const searchChangeHandler = useCallback(
-    (e) => {
-      const { value } = e.target;
-      setSearchParams(value ? { search: value } : {}, { replace: true });
-    },
-    [setSearchParams]
-  );
 
   const categoryChangeHandler = (e) => {
     setCategory(e.target.value);
@@ -167,15 +151,6 @@ function Products() {
         <h2>Products</h2>
 
         <div className="products-controls">
-          <input
-            ref={searchInputRef}
-            type="text"
-            value={search}
-            onChange={searchChangeHandler}
-            placeholder="Search by name or category…"
-            aria-label="Search products"
-          />
-
           <select value={category} onChange={categoryChangeHandler} aria-label="Filter by category">
             {categoryOptions.map((option) => (
               <option key={option} value={option}>

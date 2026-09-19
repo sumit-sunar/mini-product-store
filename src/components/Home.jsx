@@ -2,7 +2,6 @@
 import { useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCartCount } from "../redux/cartSlice";
 import { addToCart } from "../redux/cartSlice";
 import {
   fetchProducts,
@@ -16,7 +15,6 @@ import "./css/Home.css";
 
 function Home() {
   const dispatch = useDispatch();
-  const cartCount = useSelector(selectCartCount);
   const products = useSelector(selectProducts);
   const status = useSelector(selectProductsStatus);
   const error = useSelector(selectProductsError);
@@ -43,10 +41,7 @@ function Home() {
 
         <div className="home-actions">
           <Link to="/products" className="btn btn-primary">
-            Shop Products
-          </Link>
-          <Link to="/cart" className="btn">
-            View Cart ({cartCount})
+            View All Products
           </Link>
         </div>
       </section>
