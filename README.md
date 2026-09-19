@@ -1,35 +1,74 @@
-# Mini Product Store
+ # Mini Product Store
 
-A small product-browsing app built with React, React Router, and Redux Toolkit. Users can browse products, search/filter, view product details, and manage a cart.
+ A small React product-browsing app built for the Week 1-14 project assessment.
 
-## How to Run
+ The app uses functional React components, React Router v6, Redux Toolkit, and the Fake Store API. Users can browse products, search and filter results, view product details, manage a cart, and complete a simple checkout flow.
 
-```bash
-npm install
-npm start
-```
+ ## Getting Started
 
-The app will start using Vite.
+ Install the dependencies and start the development server:
 
-## State Management Approach
+ ```bash
+ npm install
+ npm start
+ ```
 
-This project uses **Redux Toolkit** (not Context API) for global state, including `createAsyncThunk` for async product fetching.
+ Vite will display the local development URL in the terminal.
 
-## Styling
+ ## Assessment Features
 
-Plain custom CSS only — no CSS frameworks (Bootstrap, Tailwind, Material UI, etc.).
+ ### React Fundamentals
 
-## Feature Checklist (Where Each Feature Is Used)
+ - **Component-based architecture:** Reusable components are organized in `src/components/`. Examples include `Home`, `Products`, `ProductCard`, `ProductDetail`, `Cart`, and `NotFound`.
+ - **Props and one-way data flow:** `ProductCard` receives `product` and `onAddToCart` props from `Home` and `Products`.
+ - **State with `useState`:** `App.jsx` manages the header search, `Products.jsx` manages the category filter, and `Cart.jsx` manages checkout modal state.
+ - **Lazy state initialization:** `Products.jsx` initializes the category state with `useState(() => "all")`.
+ - **Side effects with `useEffect`:** `Home.jsx`, `Products.jsx`, and `ProductDetail.jsx` load product data when they mount or when the product ID changes.
+ - **Event handling and controlled forms:** The header search input and category selector are controlled inputs with working event handlers.
+ - **Conditional rendering:** The app displays loading skeletons, API errors, empty states, no-match results, fallback notices, and checkout confirmation messages.
+ - **Lists and keys:** Product cards, categories, skeleton cards, and cart items are rendered with `.map()` and stable keys.
 
-- **Component-based architecture** — components/ (e.g. ProductCard, ProductGridSkeleton)
-- **Props + one-way data flow, destructuring** — Products.jsx (ProductCard({ product, onAddToCart }))
-- **useState (lazy init / object-array state)** — Products.jsx (lazy init for filter state), Cart.jsx (checkout state)
-- **useEffect for side effects** — Products.jsx, Home.jsx (fetch products on mount), ProductDetail.jsx (fetch single product)
-- **useRef** — Products.jsx (focuses the search input)
-- **Memoization (React.memo / useMemo / useCallback)** — Products.jsx (memoized ProductCard, derived product list), Cart.jsx (memoized totals/handlers)
-- **Lists with unique key** — Products.jsx, Home.jsx, Cart.jsx (keyed by product.id / item.id)
-- **Event handling + controlled form** — App.jsx (header search), Products.jsx (search + category filter)
-- **Conditional rendering (loading/empty/error)** — Products.jsx, Home.jsx, Cart.jsx
-- **React Router v6 (routes, URL param, navigation)** — App.jsx (routes), ProductDetail.jsx (/products/:id, uses Link/useNavigate)
-- **Global state management (Redux Toolkit)** — store.js, productSlice.js, cartSlice.js
-- **HTTP requests to public API** — productSlice.js (fetches from Fake Store API, with local fallback data)
+ ### Routing and Navigation
+
+ - **React Router v6:** Routes are defined in `App.jsx` and navigation uses `Link` and `useNavigate`.
+ - **Dynamic route:** `ProductDetail.jsx` reads the `/products/:id` URL parameter to display a complete product.
+ - **Search parameters:** `Products.jsx` uses `useSearchParams` to keep product searches in the URL.
+
+ ### State Management and Data
+
+ - **Redux Toolkit:** Redux is the only global state-management approach used in the project. The store is configured in `src/redux/store.js`.
+ - **Product data:** `src/redux/productSlice.js` uses `createAsyncThunk` and `fetch` to request products from `https://fakestoreapi.com/products`.
+ - **API fallback:** `src/data/fallbackProducts.js` provides local product data when the public API is unavailable.
+ - **Cart workflow:** `src/redux/cartSlice.js` and `Cart.jsx` support adding products, removing products, changing quantities, calculating totals, and confirming checkout.
+
+ ### Performance
+
+ - **Memoization:** `Products.jsx` uses `React.memo`, `useMemo`, and `useCallback`. `Cart.jsx` uses `useMemo` for cart calculations.
+
+ ## Routes
+
+ - `/` - Home page with featured products
+ - `/products` - Product list with search and category filtering
+ - `/products/:id` - Product detail page
+ - `/cart` - Cart and checkout page
+ - Any other path - Not found page
+
+ ## Project Structure
+
+ ```text
+ src/
+   components/       Reusable pages and product/cart components
+   data/              Local fallback product data
+   redux/             Redux store, cart slice, and async product slice
+   App.jsx            Shared layout and application routes
+   main.jsx           React, Redux, and Router entry point
+ ```
+
+ ## Assessment Note
+
+ The project currently covers the assessment requirements except `useRef`; no ref is used in the existing implementation. The app uses functional components only and does not use a CSS framework.
+
+
+
+
+
